@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RTSCamera : MonoBehaviour {
 
@@ -19,10 +17,7 @@ public class RTSCamera : MonoBehaviour {
 
   private GameObject cam;
 
-  private Selector selector;
-
   void Start() {
-    this.selector = this.GetComponent<Selector>();
     this.cam = this.transform.FindChild("camera").gameObject;
   }
 
@@ -39,10 +34,6 @@ public class RTSCamera : MonoBehaviour {
 
     if (Input.GetAxis("Mouse ScrollWheel") > 0) {
       this.ZoomIn();
-    }
-
-    if (Input.GetMouseButtonDown(1)) {
-      this.TryPlace();
     }
 
     this.previousMouseX = Input.mousePosition.x;
@@ -115,15 +106,5 @@ public class RTSCamera : MonoBehaviour {
 
     this.previousMouseX = Input.mousePosition.x;
     this.previousMouseY = Input.mousePosition.y;
-  }
-
-  private void TryPlace() {
-    if (this.selector.selected) {
-      Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-      RaycastHit hit;
-      if (Physics.Raycast(ray, out hit, 100)) {
-        Instantiate(this.selector.selected, hit.point, Quaternion.identity);
-      }
-    }
   }
 }

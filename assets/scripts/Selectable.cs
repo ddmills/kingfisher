@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Selectable : MonoBehaviour {
 
@@ -13,12 +11,10 @@ public class Selectable : MonoBehaviour {
   }
 
   public void Select() {
-    Debug.Log("SELECTED");
     this.selected = true;
   }
 
   public void Unselect() {
-    Debug.Log("UNSELECTED");
     this.selected = false;
   }
 }

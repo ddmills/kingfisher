@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Selector : MonoBehaviour {
 
@@ -12,13 +10,7 @@ public class Selector : MonoBehaviour {
     }
   }
 
-  void Update () {
-    if (Input.GetMouseButtonDown(0)) {
-      this.TrySelect();
-    }
-  }
-
-  private void TrySelect() {
+  public bool TrySelect() {
     this.Unselect();
     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
     RaycastHit hit;
@@ -26,8 +18,10 @@ public class Selector : MonoBehaviour {
       Selectable target = hit.transform.gameObject.GetComponent<Selectable>();
       if (target) {
         this.Select(target);
+        return true;
       }
     }
+    return false;
   }
 
   public void Select(Selectable target) {
