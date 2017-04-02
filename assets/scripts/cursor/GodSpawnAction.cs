@@ -13,11 +13,13 @@ class GodSpawnAction : CursorAction {
     this.ob = ob;
     GameObject bp = Game.instance.cursor.blueprint;
 
-    bp.transform.localScale = ob.transform.localScale;
-    bp.transform.rotation = ob.transform.rotation;
-    bp.GetComponentInChildren<MeshRenderer>().enabled = true;
+    if (ob.GetComponent<MeshFilter>()) {
+      bp.transform.localScale = ob.transform.localScale;
+      bp.transform.rotation = ob.transform.rotation;
+      bp.GetComponentInChildren<MeshRenderer>().enabled = true;
 
-    bp.GetComponent<MeshFilter>().mesh = ob.GetComponent<MeshFilter>().sharedMesh;
+      bp.GetComponent<MeshFilter>().mesh = ob.GetComponent<MeshFilter>().sharedMesh;
+    }
   }
 
   public override void execute(Transform spot) {
