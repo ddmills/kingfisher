@@ -1,6 +1,12 @@
 using UnityEngine;
 
 class SelectingAction : CursorAction {
+  public override string name {
+    get {
+      return "select";
+    }
+  }
+
   public override void execute(Transform spot) {
     if (Game.instance.selector.TrySelect()) {
       GameObject ob = Game.instance.selector.selected.gameObject;

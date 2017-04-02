@@ -2,6 +2,11 @@ using UnityEngine;
 
 class GodSpawnAction : CursorAction {
 
+  public override string name {
+    get {
+      return "god spawn";
+    }
+  }
   protected GameObject ob;
 
   public GodSpawnAction(GameObject ob) {
