@@ -13,7 +13,12 @@ public class MoveTask : Task {
 
   public override void Start() {
     this.moveTo.Begin();
-    this.moveTo.ReachedGoal += this.MarkComplete;
+    this.moveTo.OnReachedGoal += this.OnReachedGoal;
+  }
+
+  private void OnReachedGoal() {
+    this.moveTo.OnReachedGoal -= this.OnReachedGoal;
+    this.MarkComplete();
   }
 
   public override void Cancel() {

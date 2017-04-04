@@ -2,8 +2,8 @@
 using UnityEngine.AI;
 
 public class MoveTo : MonoBehaviour {
-  public delegate void ReachedGoalCallback();
-  public event ReachedGoalCallback ReachedGoal;
+  public delegate void ReachedGoalHandler();
+  public event ReachedGoalHandler OnReachedGoal;
   private Vector3 goal;
   private float epsilon = .05f;
   private NavMeshAgent agent;
@@ -33,8 +33,8 @@ public class MoveTo : MonoBehaviour {
     if (!this.finished && this.agent.remainingDistance <= this.epsilon) {
       this.agent.isStopped = true;
       this.finished = true;
-      if (this.ReachedGoal != null) {
-        this.ReachedGoal();
+      if (this.OnReachedGoal != null) {
+        this.OnReachedGoal();
       }
     }
   }
