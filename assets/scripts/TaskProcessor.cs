@@ -7,8 +7,7 @@ public class TaskProcessor : MonoBehaviour {
   public Task currentTask;
 
   void Start () {
-    MoveTask move = new MoveTask(this.gameObject);
-    move.SetGoal(new Vector3(5, 0, -5));
+    MoveTask move = new MoveTask(this.gameObject, new Vector3(5, 0, -5));
     this.BeginTask(move);
   }
 

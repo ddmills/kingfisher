@@ -1,35 +1,22 @@
 using UnityEngine;
-using UnityEngine.AI;
 
 public class MoveTask : Task {
   public override string rootVerb { get { return "move"; } }
   public override string presentVerb { get { return "moving"; } }
   public override string pastVerb { get { return "moved"; } }
-  public Vector3 goal;
-  public float epsilon;
-  private NavMeshAgent agent;
+  private MoveTo moveTo;
 
-  public MoveTask(GameObject entity) : base(entity) {
-    this.agent = this.entity.GetComponent<NavMeshAgent>();
-  }
-
-  public void SetGoal(Vector3 goal, float epsilon = .05f) {
-    this.goal = goal;
-    this.epsilon = epsilon;
-  }
-
-  public override void Update() {
-    if (this.agent.remainingDistance <= this.epsilon) {
-      this.agent.isStopped = true;
-      this.MarkComplete();
-    }
+  public MoveTask(GameObject entity, Vector3 goal, float epsilon = .05f) : base(entity) {
+    this.moveTo = this.entity.GetComponent<MoveTo>();
+    this.moveTo.SetGoal(goal);
   }
 
   public override void Start() {
-    this.agent.SetDestination(this.goal);
+    this.moveTo.Begin();
+    this.moveTo.ReachedGoal += this.MarkComplete;
   }
 
   public override void Cancel() {
-    this.agent.isStopped = true;
+    this.moveTo.Pause();
   }
 }
