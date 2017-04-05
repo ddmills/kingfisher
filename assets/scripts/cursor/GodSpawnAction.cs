@@ -22,12 +22,12 @@ class GodSpawnAction : CursorAction {
     }
   }
 
-  public override void execute(Transform spot) {
+  public override void Execute(Transform spot) {
     Quaternion qt = Game.instance.cursor.blueprint.transform.rotation;
     Game.instance.Spawn(this.ob, spot.position, qt);
   }
 
-  public override void cancel(Transform spot) {
+  public override void Cancel(Transform spot) {
     Game.instance.cursor.blueprint.GetComponentInChildren<MeshRenderer>().enabled = false;
     Game.instance.cursor.action = new SelectingAction();
   }

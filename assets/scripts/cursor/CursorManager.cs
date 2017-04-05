@@ -17,13 +17,13 @@ public class CursorManager : MonoBehaviour {
 
     if (Input.GetMouseButtonDown(0)) {
       if (this.action != null) {
-        action.execute(this.reticle.transform);
+        action.Execute(this.reticle.transform);
       }
     }
 
     if (Input.GetMouseButtonDown(1)) {
       if (this.action != null) {
-        action.cancel(this.reticle.transform);
+        action.Cancel(this.reticle.transform);
       }
     }
   }

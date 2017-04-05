@@ -14,7 +14,7 @@ public class Selectable : MonoBehaviour {
     this.selected = true;
   }
 
-  public void Unselect() {
+  public void Deselect() {
     this.selected = false;
   }
 }

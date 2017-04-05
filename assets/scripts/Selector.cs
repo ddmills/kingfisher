@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 
 public class Selector : MonoBehaviour {
-
+  public delegate void SelectHandler(GameObject selected);
+  public delegate void DeselectHandler(GameObject deselected);
+  public event SelectHandler OnSelect;
+  public event DeselectHandler OnDeselect;
   public Selectable selected;
 
   void Start () {
@@ -11,7 +14,7 @@ public class Selector : MonoBehaviour {
   }
 
   public bool TrySelect() {
-    this.Unselect();
+    this.Deselect();
     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
     RaycastHit hit;
     if (Physics.Raycast(ray, out hit, 100, 1 << 8)) {
@@ -25,15 +28,23 @@ public class Selector : MonoBehaviour {
   }
 
   public void Select(Selectable target) {
-    this.Unselect();
+    this.Deselect();
     target.Select();
     this.selected = target;
+    if (this.OnSelect != null) {
+      this.OnSelect(this.selected.gameObject);
+    }
   }
 
-  public void Unselect() {
+  public void Deselect() {
     if (this.selected) {
-      this.selected.Unselect();
+      GameObject deselected = this.selected.gameObject;
+      Debug.Log("Noooo");
+      this.selected.Deselect();
       this.selected = null;
+      if (this.OnDeselect != null) {
+        this.OnDeselect(deselected);
+      }
     }
   }
 }
