@@ -3,28 +3,25 @@ using UnityEngine;
 
 namespace Entity.Task {
   public class Processor : MonoBehaviour {
-    public List<Ability> abilities;
     public Task currentTask;
-
-    void Start () {
-      Move move = new Move(this.gameObject, new Vector3(3, 0, -3));
-      this.BeginTask(move);
-    }
-
-    public bool CanPerform(Task task) {
-      return false;
-    }
 
     private void Update () {
       if (this.currentTask == null) {
-        Fire fire = this.FindClosestFire();
-        if (fire != null) {
-          ExtinguishFire extinguishFire = new ExtinguishFire(this.gameObject, fire);
-          this.BeginTask(extinguishFire);
+        Task task = this.GetNextTask();
+        if (task != null) {
+          this.BeginTask(task);
         }
       } else {
         this.currentTask.Update();
       }
+    }
+
+    private Task GetNextTask() {
+      Fire fire = this.FindClosestFire();
+      if (fire != null) {
+        return new ExtinguishFire(this.gameObject, fire);
+      }
+      return null;
     }
 
     private Fire FindClosestFire() {
@@ -33,17 +30,19 @@ namespace Entity.Task {
       float closestDistance = -1;
 
       foreach (Fire fire in fires) {
-        float distance = Vector3.Distance(this.transform.position, fire.transform.position);
+        if (fire.flaggedForExtinction) {
+          float distance = Vector3.Distance(this.transform.position, fire.transform.position);
 
-        if (!closest) {
-          closest = fire;
-          closestDistance = distance;
-          continue;
-        }
+          if (!closest) {
+            closest = fire;
+            closestDistance = distance;
+            continue;
+          }
 
-        if (distance <= closestDistance) {
-          closest = fire;
-          closestDistance = distance;
+          if (distance <= closestDistance) {
+            closest = fire;
+            closestDistance = distance;
+          }
         }
       }
 
@@ -52,9 +51,9 @@ namespace Entity.Task {
 
     private void BeginTask(Task task) {
       this.currentTask = task;
-      this.currentTask.Start();
       Debug.Log(this.name + " is going to " + task.rootVerb + "...");
       Debug.Log(this.name + " is currently " + task.presentVerb + "...");
+      this.currentTask.Start();
     }
 
     private void CancelTask(Task task) {

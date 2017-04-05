@@ -6,24 +6,19 @@ namespace Entity.Task {
     public override string presentVerb { get { return "moving"; } }
     public override string pastVerb { get { return "moved"; } }
     private MoveTo moveTo;
+    private Vector3 goal;
 
     public Move(GameObject entity, Vector3 goal, float epsilon = .05f) : base(entity) {
+      this.goal = goal;
       this.moveTo = this.entity.GetComponent<MoveTo>();
-      this.moveTo.SetGoal(goal);
     }
 
     public override void Start() {
-      this.moveTo.Begin();
-      this.moveTo.OnReachedGoal += this.OnReachedGoal;
+      this.moveTo.SetGoal(goal);
     }
 
     private void OnReachedGoal() {
-      this.moveTo.OnReachedGoal -= this.OnReachedGoal;
       this.MarkComplete();
-    }
-
-    public override void Cancel() {
-      this.moveTo.Pause();
     }
   }
 }

@@ -7,42 +7,23 @@ namespace Entity.Task {
     public override string pastVerb { get { return "extinguished fire"; } }
     private MoveTo moveTo;
     private Fire fire;
-    private bool reachedFire = false;
     private float fireExtinguishingRate = 25f;
 
     public ExtinguishFire(GameObject entity, Fire fire) : base(entity) {
       this.fire = fire;
       this.moveTo = this.entity.GetComponent<MoveTo>();
-      this.moveTo.SetGoal(fire.transform.position, 2);
     }
 
     public override void Start() {
-      this.moveTo.Begin();
-      this.fire.OnExtinguish += this.MarkComplete;
-      this.moveTo.OnReachedGoal += this.OnReachedFire;
+      this.moveTo.SetGoal(this.fire.transform.position, 2);
     }
 
     public override void Update() {
       if (this.fire.extinguished) {
         this.MarkComplete();
-      }
-
-      if (this.reachedFire) {
+      } else if (this.moveTo.reachedGoal) {
         this.fire.PutOut(this.fireExtinguishingRate * Time.deltaTime);
       }
-    }
-
-    private void OnReachedFire() {
-      this.reachedFire = true;
-    }
-
-    public override void Cancel() {
-      this.moveTo.Pause();
-    }
-
-    public override void MarkComplete() {
-      this.moveTo.Pause();
-      base.MarkComplete();
     }
   }
 }

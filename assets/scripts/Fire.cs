@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 
 public class Fire : MonoBehaviour {
-  public delegate void ExtinguishedHandler();
-  public event ExtinguishedHandler OnExtinguish;
-  public float startingIntensity = 50f;
+  public float growthRate = 2.5f;
   public float maximumIntensity = 100f;
-  private float intensity;
+  public bool flaggedForExtinction = true;
+  public bool destroyOnExtinction = true;
+  public float intensity = 40f;
   private bool _extinguished = false;
+  private ParticleSystem particles;
+
   public bool extinguished {
     get {
       return this._extinguished;
@@ -17,7 +19,18 @@ public class Fire : MonoBehaviour {
   }
 
   void Start () {
-    this.intensity = this.startingIntensity;
+    this.particles = this.GetComponentInChildren<ParticleSystem>();
+  }
+
+  public void Update() {
+    if (!this.extinguished) {
+      this.intensity += Time.deltaTime * this.growthRate;
+      if (this.intensity > this.maximumIntensity) {
+        this.intensity = this.maximumIntensity;
+      }
+    }
+    ParticleSystem.MainModule main = this.particles.main;
+    main.startLifetime = this.intensity / 50f;
   }
 
   public void PutOut(float amount) {
@@ -26,14 +39,9 @@ public class Fire : MonoBehaviour {
     if (this.intensity <= 0) {
       this.intensity = 0;
       this.extinguished = true;
-      if (this.OnExtinguish != null) {
+      if (this.destroyOnExtinction) {
         Destroy(this.gameObject);
-        this.OnExtinguish();
       }
     }
-  }
-
-  public bool IsExtinguished() {
-    return this.extinguished;
   }
 }

@@ -2,40 +2,35 @@
 using UnityEngine.AI;
 
 public class MoveTo : MonoBehaviour {
-  public delegate void ReachedGoalHandler();
-  public event ReachedGoalHandler OnReachedGoal;
   private Vector3 goal;
   private float epsilon = .05f;
   private NavMeshAgent agent;
-  private bool finished = false;
+  public bool reachedGoal {
+    get {
+      return this.distance <= this.epsilon;
+    }
+  }
+  public float distance {
+    get {
+      return Vector3.Distance(this.transform.position, this.goal);
+    }
+  }
 
   void Start () {
     this.agent = GetComponent<NavMeshAgent>();
   }
 
   public void SetGoal(Vector3 goal, float epsilon = .05f) {
-    this.agent.destination = goal;
     this.epsilon = epsilon;
-    this.agent.isStopped = true;
-    this.finished = false;
-  }
-
-  public void Begin() {
-    this.agent.isStopped = false;
-    this.finished = false;
-  }
-
-  public void Pause() {
-    this.agent.isStopped = true;
+    this.goal = goal;
+    this.agent.destination = goal;
   }
 
   void Update () {
-    if (!this.finished && this.agent.remainingDistance <= this.epsilon) {
+    if (this.reachedGoal) {
       this.agent.isStopped = true;
-      this.finished = true;
-      if (this.OnReachedGoal != null) {
-        this.OnReachedGoal();
-      }
+    } else {
+      this.agent.isStopped = false;
     }
   }
 }
