@@ -15,7 +15,7 @@ namespace God.UI {
     }
 
     void Refresh() {
-      text.text = "Cursor mode: " + Game.instance.cursor.action.name;
+      text.text = "Cursor mode: " + Game.instance.cursor.DescribeAction();
     }
   }
 }

@@ -16,7 +16,7 @@ namespace God.UI {
     public void OnSelect(int index) {
       this.selected = index > 0 ? this.spawnable[index - 1] : null;
       if (this.selected) {
-        Game.instance.cursor.action = new GodSpawnAction(this.selected);
+        Game.instance.cursor.SetAction(new GodSpawnAction(this.selected));
       }
     }
 

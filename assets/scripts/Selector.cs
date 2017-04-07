@@ -39,7 +39,6 @@ public class Selector : MonoBehaviour {
   public void Deselect() {
     if (this.selected) {
       GameObject deselected = this.selected.gameObject;
-      Debug.Log("Noooo");
       this.selected.Deselect();
       this.selected = null;
       if (this.OnDeselect != null) {

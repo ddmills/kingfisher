@@ -9,16 +9,11 @@ public class SelectionDetails : MonoBehaviour {
     Game.instance.selector.OnDeselect += OnObjectDeselected;
   }
 
-  void Update () {
-  }
-
   public void OnObjectSelected(GameObject selected) {
-    Debug.Log(selected.name + " selected");
     this.label.text = selected.name;
   }
 
   public void OnObjectDeselected(GameObject deselected) {
-    Debug.Log(deselected.name + " deselected");
     this.label.text = "";
   }
 }

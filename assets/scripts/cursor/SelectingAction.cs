@@ -1,4 +1,4 @@
-using UnityEngine;
+using UnityEngine.EventSystems;
 
 class SelectingAction : CursorAction {
   public override string name {
@@ -7,14 +7,20 @@ class SelectingAction : CursorAction {
     }
   }
 
-  public override void Execute(Transform spot) {
-    if (Game.instance.selector.TrySelect()) {
-      GameObject ob = Game.instance.selector.selected.gameObject;
-      Game.instance.cursor.action = new GodSpawnAction(ob);
+  public override void OnLeftClick(PointerEventData data) {
+    Selectable selectable = data.pointerPress.GetComponent<Selectable>();
+    if (selectable) {
+      Game.instance.selector.Select(selectable);
+    } else {
+      Game.instance.selector.Deselect();
     }
   }
 
-  public override void Cancel(Transform spot) {
+  public override void OnRightClick(PointerEventData data) {
+    this.Abort();
+  }
+
+  public override void OnAbort() {
     Game.instance.selector.Deselect();
   }
 }

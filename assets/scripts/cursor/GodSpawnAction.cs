@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 class GodSpawnAction : CursorAction {
 
@@ -22,13 +23,13 @@ class GodSpawnAction : CursorAction {
     }
   }
 
-  public override void Execute(Transform spot) {
+  public override void OnLeftClick(PointerEventData click) {
     Quaternion qt = Game.instance.cursor.blueprint.transform.rotation;
-    Game.instance.Spawn(this.ob, spot.position, qt);
+    Game.instance.Spawn(this.ob, click.pointerPressRaycast.worldPosition, qt);
   }
 
-  public override void Cancel(Transform spot) {
+  public override void OnRightClick(PointerEventData click) {
     Game.instance.cursor.blueprint.GetComponentInChildren<MeshRenderer>().enabled = false;
-    Game.instance.cursor.action = new SelectingAction();
+    Game.instance.cursor.SetAction(new SelectingAction());
   }
 }

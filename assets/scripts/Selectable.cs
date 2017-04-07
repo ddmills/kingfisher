@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class Selectable : MonoBehaviour {
-
+public class Selectable : MonoBehaviour, IPointerClickHandler {
   private bool selected = false;
 
   public bool Selected {
@@ -16,5 +16,9 @@ public class Selectable : MonoBehaviour {
 
   public void Deselect() {
     this.selected = false;
+  }
+
+  public void OnPointerClick(PointerEventData click) {
+    Game.instance.cursor.Clicked(click);
   }
 }
