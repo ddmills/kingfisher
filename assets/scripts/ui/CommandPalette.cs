@@ -9,28 +9,40 @@ public class CommandPalette : MonoBehaviour {
   void Start () {
     Game.instance.selector.OnSelect += OnObjectSelected;
     Game.instance.selector.OnDeselect += OnObjectDeselected;
-    this.RemoveAllButtons();
+    RemoveAllButtons();
   }
 
   public void OnObjectSelected(GameObject selected) {
-    this.target = selected;
+    target = selected;
     this.RefreshAllButtons();
   }
 
   public void OnObjectDeselected(GameObject deselected) {
-    this.RemoveAllButtons();
+    RemoveAllButtons();
   }
 
   public void RefreshAllButtons() {
     this.RemoveAllButtons();
     Command[] commands = target.GetComponents<Command>();
     foreach (Command command in commands) {
-      if (command.visible) {
+      if (command.visible && !command.issued) {
         Button btn = Instantiate(commandButtonPrefab);
         btn.transform.SetParent(this.transform);
         btn.GetComponentInChildren<Text>().text = command.label;
         btn.onClick.AddListener(delegate {
           command.Issue();
+          command.issued = true;
+          RefreshAllButtons();
+        });
+      }
+
+      if (command.issued && command.cancellable) {
+        Button btn = Instantiate(commandButtonPrefab);
+        btn.transform.SetParent(this.transform);
+        btn.GetComponentInChildren<Text>().text = "Cancel " + command.label;
+        btn.onClick.AddListener(delegate {
+          command.Cancel();
+          command.issued = false;
           RefreshAllButtons();
         });
       }

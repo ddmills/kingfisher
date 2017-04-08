@@ -8,19 +8,19 @@ public class Selector : MonoBehaviour {
   public Selectable selected;
 
   void Start () {
-    if (this.selected) {
-      this.Select(this.selected);
+    if (selected) {
+      Select(selected);
     }
   }
 
   public bool TrySelect() {
-    this.Deselect();
+    Deselect();
     Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
     RaycastHit hit;
     if (Physics.Raycast(ray, out hit, 100, 1 << 8)) {
       Selectable target = hit.transform.gameObject.GetComponent<Selectable>();
       if (target) {
-        this.Select(target);
+        Select(target);
         return true;
       }
     }
@@ -28,21 +28,31 @@ public class Selector : MonoBehaviour {
   }
 
   public void Select(Selectable target) {
-    this.Deselect();
+    Deselect();
     target.Select();
-    this.selected = target;
-    if (this.OnSelect != null) {
-      this.OnSelect(this.selected.gameObject);
+    selected = target;
+
+    Deletable deletable = target.GetComponent<Deletable>();
+    if (deletable) {
+      deletable.OnDelete += Deselect;
+    }
+
+    if (OnSelect != null) {
+      OnSelect(selected.gameObject);
     }
   }
 
   public void Deselect() {
-    if (this.selected) {
-      GameObject deselected = this.selected.gameObject;
-      this.selected.Deselect();
-      this.selected = null;
-      if (this.OnDeselect != null) {
-        this.OnDeselect(deselected);
+    if (selected) {
+      GameObject deselected = selected.gameObject;
+      selected.Deselect();
+      Deletable deletable = selected.GetComponent<Deletable>();
+      if (deletable) {
+        deletable.OnDelete -= Deselect;
+      }
+      selected = null;
+      if (OnDeselect != null) {
+        OnDeselect(deselected);
       }
     }
   }

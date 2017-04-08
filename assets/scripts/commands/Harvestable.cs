@@ -5,10 +5,12 @@ namespace Entity.Command {
     public override string label {
       get { return "Harvest"; }
     }
+    public override bool cancellable {
+      get { return true; }
+    }
 
     public override void Issue() {
-      Debug.Log("harvest this thing please");
-      visible = false;
+      Debug.Log("harvest " + this.name);
     }
   }
 }
