@@ -3,7 +3,7 @@
 public class Fire : MonoBehaviour {
   public float growthRate = 2.5f;
   public float maximumIntensity = 100f;
-  public bool flaggedForExtinction = true;
+  public bool flaggedForExtinction = false;
   public bool destroyOnExtinction = true;
   public float intensity = 40f;
   private bool _extinguished = false;
