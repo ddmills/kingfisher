@@ -1,5 +1,5 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using Entity.Behavior;
 
 namespace Entity.Task {
   public class Processor : MonoBehaviour {
@@ -19,34 +19,22 @@ namespace Entity.Task {
     private Task GetNextTask() {
       Fire fire = this.FindClosestFire();
       if (fire != null) {
-        return new ExtinguishFire(this.gameObject, fire);
+        return new Extinguish(this.gameObject, fire);
+      }
+
+      Harvestable harvestable = this.FindClosestHarvestable();
+      if (harvestable != null) {
+        return new Harvest(this.gameObject, harvestable);
       }
       return null;
     }
 
     private Fire FindClosestFire() {
-      Fire[] fires = Object.FindObjectsOfType<Fire>();
-      Fire closest = null;
-      float closestDistance = -1;
+      return Utility.Entity.FindClosest<Fire>(transform.position, (Fire ob) => ob.flaggedForExtinction);
+    }
 
-      foreach (Fire fire in fires) {
-        if (fire.flaggedForExtinction) {
-          float distance = Vector3.Distance(this.transform.position, fire.transform.position);
-
-          if (!closest) {
-            closest = fire;
-            closestDistance = distance;
-            continue;
-          }
-
-          if (distance <= closestDistance) {
-            closest = fire;
-            closestDistance = distance;
-          }
-        }
-      }
-
-      return closest;
+    private Harvestable FindClosestHarvestable() {
+      return Utility.Entity.FindClosest<Harvestable>(transform.position, (Harvestable ob) => ob.flaggedForHarvest);
     }
 
     private void BeginTask(Task task) {

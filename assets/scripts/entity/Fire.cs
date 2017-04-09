@@ -33,7 +33,7 @@ public class Fire : MonoBehaviour {
     main.startLifetime = intensity / 50f;
   }
 
-  public void PutOut(float amount) {
+  public void Extinguish(float amount) {
     if (extinguished) return;
     intensity -= amount;
     if (intensity <= 0) {

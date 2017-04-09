@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace Entity.Command {
-  public class Extinguishable : Command {
+  public class Extinguish : Command {
     public override string label {
       get { return "Extinguish"; }
     }
