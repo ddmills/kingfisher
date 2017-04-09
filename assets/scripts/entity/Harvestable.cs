@@ -8,6 +8,10 @@ namespace Entity.Behavior {
 
     public void Harvest(float amount) {
       if (harvested) return;
+      Harvested();
+    }
+
+    protected virtual void Harvested() {
       harvested = true;
       flaggedForHarvest = false;
       if (deleteOnHarvest) {
