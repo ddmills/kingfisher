@@ -10,25 +10,26 @@ namespace God.UI {
     public Dropdown dropdown;
 
     void Start () {
-      this.PopulateEntityList();
+      PopulateEntityList();
     }
 
     public void OnSelect(int index) {
-      this.selected = index > 0 ? this.spawnable[index - 1] : null;
-      if (this.selected) {
-        Game.instance.cursor.SetAction(new GodSpawnAction(this.selected));
+      selected = index > 0 ? spawnable[index - 1] : null;
+      if (selected) {
+        Game.instance.cursor.SetAction(new GodSpawnAction(selected));
+        dropdown.value = 0;
       }
     }
 
     void PopulateEntityList() {
-      this.dropdown.ClearOptions();
+      dropdown.ClearOptions();
 
       List<string> names = new List<string>() { "spawn" };
-      foreach (GameObject entity in this.spawnable) {
+      foreach (GameObject entity in spawnable) {
         names.Add(entity.name);
       }
 
-      this.dropdown.AddOptions(names);
+      dropdown.AddOptions(names);
     }
   }
 }
