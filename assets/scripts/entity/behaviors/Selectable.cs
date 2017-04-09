@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 public class Selectable : MonoBehaviour, IPointerClickHandler {
   private bool selected = false;
+  public bool isEnabled = true;
 
   public bool Selected {
     get {
@@ -10,7 +11,7 @@ public class Selectable : MonoBehaviour, IPointerClickHandler {
     }
   }
 
-  public string label = "A thing";
+  public string label = "Entity";
 
   public void Select() {
     this.selected = true;

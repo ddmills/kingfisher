@@ -9,7 +9,7 @@ class SelectingAction : CursorAction {
 
   public override void OnLeftClick(PointerEventData data) {
     Selectable selectable = data.pointerPress.GetComponent<Selectable>();
-    if (selectable) {
+    if (selectable && selectable.isEnabled) {
       Game.instance.selector.Select(selectable);
     } else {
       Game.instance.selector.Deselect();

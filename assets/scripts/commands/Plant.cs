@@ -8,11 +8,11 @@ namespace Entity.Command {
     }
 
     public override void Issue() {
-      // GetComponent<Entity.Behavior.Harvestable>().flaggedForHarvest = true;
+      GetComponent<Entity.Behavior.Plantable>().flaggedForPlanting = true;
     }
 
     public override void Cancel() {
-      // GetComponent<Entity.Behavior.Harvestable>().flaggedForHarvest = false;
+      GetComponent<Entity.Behavior.Plantable>().flaggedForPlanting = false;
     }
   }
 }

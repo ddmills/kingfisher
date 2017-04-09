@@ -26,6 +26,12 @@ namespace Entity.Task {
       if (harvestable != null) {
         return new Harvest(this.gameObject, harvestable);
       }
+
+      Plantable plantable = this.FindClosestPlantable();
+      if (plantable != null) {
+        return new Plant(this.gameObject, plantable);
+      }
+
       return null;
     }
 
@@ -35,6 +41,10 @@ namespace Entity.Task {
 
     private Harvestable FindClosestHarvestable() {
       return Utility.Entity.FindClosest<Harvestable>(transform.position, (Harvestable ob) => ob.flaggedForHarvest);
+    }
+
+    private Plantable FindClosestPlantable() {
+      return Utility.Entity.FindClosest<Plantable>(transform.position, (Plantable ob) => ob.flaggedForPlanting);
     }
 
     private void BeginTask(Task task) {
