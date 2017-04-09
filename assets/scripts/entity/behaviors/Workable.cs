@@ -7,10 +7,12 @@ namespace Entity.Behavior {
     public bool flaggedForWork = false;
     public bool complete = false;
     public float workRemaining = 1f;
+    public ProgressMeter progressMeter;
 
     public void Work(float amount) {
       if (complete) return;
       workRemaining -= amount;
+      UpdateProgressMeter();
       if (workRemaining <= 0) {
         complete = true;
         workRemaining = 0;
@@ -18,6 +20,12 @@ namespace Entity.Behavior {
         if (OnComplete != null) {
           OnComplete();
         }
+      }
+    }
+
+    private void UpdateProgressMeter() {
+      if (progressMeter) {
+        progressMeter.progress = 1 - workRemaining;
       }
     }
   }
