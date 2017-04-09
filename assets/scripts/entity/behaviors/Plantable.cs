@@ -13,7 +13,12 @@ namespace Entity.Behavior {
     private void OnPlanted() {
       planted = true;
       flaggedForPlanting = false;
-      Instantiate(plantPrefab, transform.position, Quaternion.identity);
+      GameObject inst = Instantiate(plantPrefab, transform.position, Quaternion.identity);
+      Growable growable = inst.GetComponent<Growable>();
+      if (growable) {
+        growable.growth = 0;
+      }
+
       Entity.Command.Plant plant = GetComponent<Entity.Command.Plant>();
       if (plant) {
         plant.visible = false;
