@@ -3,7 +3,11 @@
 namespace Entity.Task {
   public class TaskProcessor : MonoBehaviour {
     public Task currentTask;
-    public TaskQueue queue;
+    private TaskQueue queue;
+
+    void Start() {
+      queue = Game.instance.taskQueue;
+    }
 
     private void Update () {
       if (currentTask == null) {
