@@ -23,6 +23,12 @@ namespace Entity.Behavior {
       }
     }
 
+    public void Reset() {
+      complete = false;
+      workRemaining = 1f;
+      UpdateProgressMeter();
+    }
+
     private void UpdateProgressMeter() {
       if (progressMeter) {
         progressMeter.progress = 1 - workRemaining;

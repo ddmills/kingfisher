@@ -7,18 +7,20 @@ namespace Entity.Task {
     public abstract string pastVerb { get; }
     public GameObject entity;
 
-    public Task(GameObject entity) {
+    public Task() {}
+
+    public virtual void Start(GameObject entity) {
       this.entity = entity;
     }
 
-    public virtual void Start() {}
-
     public virtual void Update() {}
 
-    public virtual void Cancel() {}
+    public virtual void Cancel() {
+      Debug.Log("task cancel");
+    }
 
     public virtual void MarkComplete() {
-      this.entity.GetComponent<Processor>().MarkComplete(this);
+      this.entity.GetComponent<TaskProcessor>().MarkComplete(this);
     }
   }
 }

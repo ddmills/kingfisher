@@ -1,4 +1,3 @@
-using UnityEngine;
 using Entity.Behavior;
 
 namespace Entity.Task {
@@ -7,7 +6,10 @@ namespace Entity.Task {
     public override string presentVerb { get { return "harvesting"; } }
     public override string pastVerb { get { return "harvested"; } }
 
-    public Harvest(GameObject entity, Harvestable harvestable) : base(entity, harvestable) {}
+    public Harvest(Harvestable harvestable) : base(harvestable) {}
 
+    public override void Cancel() {
+      workable.Reset();
+    }
   }
 }

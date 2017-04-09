@@ -4,15 +4,16 @@ using Entity.Behavior;
 namespace Entity.Task {
   public abstract class Work : Task {
     private MoveTo moveTo;
-    private Workable workable;
+    protected Workable workable;
     private float workRate = .2f;
 
-    public Work(GameObject entity, Workable workable) : base(entity) {
+    public Work(Workable workable) {
       this.workable = workable;
-      moveTo = entity.GetComponent<MoveTo>();
     }
 
-    public override void Start() {
+    public override void Start(GameObject entity) {
+      base.Start(entity);
+      moveTo = entity.GetComponent<MoveTo>();
       moveTo.SetGoal(workable.transform.position, 2);
     }
 

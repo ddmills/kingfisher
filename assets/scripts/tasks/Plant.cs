@@ -1,4 +1,3 @@
-using UnityEngine;
 using Entity.Behavior;
 
 namespace Entity.Task {
@@ -7,7 +6,7 @@ namespace Entity.Task {
     public override string presentVerb { get { return "planting"; } }
     public override string pastVerb { get { return "planted"; } }
 
-    public Plant(GameObject entity, Plantable plantable) : base(entity, plantable) {}
-
+    public Plant(Plantable plantable) : base(plantable) {
+    }
   }
 }

@@ -8,13 +8,14 @@ namespace Entity.Task {
     private MoveTo moveTo;
     private Vector3 goal;
 
-    public Move(GameObject entity, Vector3 goal, float epsilon = .05f) : base(entity) {
+    public Move(Vector3 goal, float epsilon = .05f) {
       this.goal = goal;
-      this.moveTo = this.entity.GetComponent<MoveTo>();
     }
 
-    public override void Start() {
-      this.moveTo.SetGoal(goal);
+    public override void Start(GameObject entity) {
+      base.Start(entity);
+      moveTo = entity.GetComponent<MoveTo>();
+      moveTo.SetGoal(goal);
     }
 
     private void OnReachedGoal() {

@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using Entity.Task;
 
 public class Game : MonoBehaviour {
   public static Game instance;
   public Selector selector;
   public CursorManager cursor;
+  public TaskQueue taskQueue;
 
   protected Game() {}
 
@@ -18,6 +20,7 @@ public class Game : MonoBehaviour {
 
     selector = GetComponent<Selector>();
     cursor = GetComponent<CursorManager>();
+    taskQueue = GetComponent<TaskQueue>();
   }
 
   public void Spawn(Object original, Vector3 position, Quaternion rotation) {

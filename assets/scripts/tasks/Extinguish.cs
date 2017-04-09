@@ -1,4 +1,3 @@
-using UnityEngine;
 using Entity.Behavior;
 
 namespace Entity.Task {
@@ -7,6 +6,6 @@ namespace Entity.Task {
     public override string presentVerb { get { return "extinguishing fire"; } }
     public override string pastVerb { get { return "extinguished fire"; } }
 
-    public Extinguish(GameObject entity, Extinguishable extinguishable) : base(entity, extinguishable) {}
+    public Extinguish(Extinguishable extinguishable) : base(extinguishable) {}
   }
 }
