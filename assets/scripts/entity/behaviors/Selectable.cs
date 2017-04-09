@@ -10,6 +10,8 @@ public class Selectable : MonoBehaviour, IPointerClickHandler {
     }
   }
 
+  public string label = "A thing";
+
   public void Select() {
     this.selected = true;
   }

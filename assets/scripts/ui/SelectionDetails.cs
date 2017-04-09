@@ -11,7 +11,7 @@ public class SelectionDetails : MonoBehaviour {
   }
 
   public void OnObjectSelected(GameObject selected) {
-    this.label.text = selected.name;
+    this.label.text = selected.GetComponent<Selectable>().label;
     Show();
   }
 
