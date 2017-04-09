@@ -8,11 +8,11 @@
     }
 
     public override void Issue() {
-      GetComponent<Entity.Behavior.Harvestable>().flaggedForHarvest = true;
+      GetComponent<Entity.Behavior.Harvestable>().flaggedForHarvesting = true;
     }
 
     public override void Cancel() {
-      GetComponent<Entity.Behavior.Harvestable>().flaggedForHarvest = false;
+      GetComponent<Entity.Behavior.Harvestable>().flaggedForHarvesting = false;
     }
   }
 }

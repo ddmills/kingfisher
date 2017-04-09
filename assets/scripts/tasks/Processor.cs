@@ -17,9 +17,9 @@ namespace Entity.Task {
     }
 
     private Task GetNextTask() {
-      Fire fire = this.FindClosestFire();
-      if (fire != null) {
-        return new Extinguish(this.gameObject, fire);
+      Extinguishable extinguishable = this.FindClosestExtinguishable();
+      if (extinguishable != null) {
+        return new Extinguish(this.gameObject, extinguishable);
       }
 
       Harvestable harvestable = this.FindClosestHarvestable();
@@ -35,12 +35,12 @@ namespace Entity.Task {
       return null;
     }
 
-    private Fire FindClosestFire() {
-      return Utility.Entity.FindClosest<Fire>(transform.position, (Fire ob) => ob.flaggedForExtinction);
+    private Extinguishable FindClosestExtinguishable() {
+      return Utility.Entity.FindClosest<Extinguishable>(transform.position, (Extinguishable ob) => ob.flaggedForExtinction);
     }
 
     private Harvestable FindClosestHarvestable() {
-      return Utility.Entity.FindClosest<Harvestable>(transform.position, (Harvestable ob) => ob.flaggedForHarvest);
+      return Utility.Entity.FindClosest<Harvestable>(transform.position, (Harvestable ob) => ob.flaggedForHarvesting);
     }
 
     private Plantable FindClosestPlantable() {
@@ -49,8 +49,8 @@ namespace Entity.Task {
 
     private void BeginTask(Task task) {
       this.currentTask = task;
-      Debug.Log(this.name + " is going to " + task.rootVerb + "...");
-      Debug.Log(this.name + " is currently " + task.presentVerb + "...");
+      Debug.Log(this.GetComponent<Selectable>().label + " is going to " + task.rootVerb);
+      Debug.Log(this.GetComponent<Selectable>().label + " is currently " + task.presentVerb);
       this.currentTask.Start();
     }
 
@@ -61,7 +61,7 @@ namespace Entity.Task {
 
     public void MarkComplete(Task task) {
       this.currentTask = null;
-      Debug.Log(this.name + " has " + task.pastVerb + "...");
+      Debug.Log(this.GetComponent<Selectable>().label + " has " + task.pastVerb);
     }
   }
 }

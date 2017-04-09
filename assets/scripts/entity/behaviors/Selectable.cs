@@ -2,23 +2,21 @@
 using UnityEngine.EventSystems;
 
 public class Selectable : MonoBehaviour, IPointerClickHandler {
-  private bool selected = false;
+  private bool _selected = false;
   public bool isEnabled = true;
 
-  public bool Selected {
-    get {
-      return this.selected;
-    }
+  public bool selected {
+    get { return _selected; }
   }
 
   public string label = "Entity";
 
   public void Select() {
-    this.selected = true;
+    _selected = true;
   }
 
   public void Deselect() {
-    this.selected = false;
+    _selected = false;
   }
 
   public void OnPointerClick(PointerEventData click) {

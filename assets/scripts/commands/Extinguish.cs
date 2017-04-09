@@ -1,4 +1,4 @@
-using UnityEngine;
+using Entity.Behavior;
 
 namespace Entity.Command {
   public class Extinguish : Command {
@@ -10,12 +10,11 @@ namespace Entity.Command {
     }
 
     public override void Issue() {
-      GetComponent<Fire>().flaggedForExtinction = true;
+      GetComponent<Extinguishable>().flaggedForExtinction = true;
     }
 
     public override void Cancel() {
-      Debug.Log("Cancel fire");
-      GetComponent<Fire>().flaggedForExtinction = false;
+      GetComponent<Extinguishable>().flaggedForExtinction = false;
     }
   }
 }

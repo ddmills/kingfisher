@@ -1,21 +1,18 @@
 using UnityEngine;
 
 namespace Entity.Behavior {
-  public class Harvestable : MonoBehaviour {
-    public bool flaggedForHarvest = false;
+  public class Harvestable : Workable {
     public bool harvested = false;
+    public bool flaggedForHarvesting= false;
     public bool deleteOnHarvest = true;
     public GameObject resourcePrefab;
 
-
-    public void Harvest(float amount) {
-      if (harvested) return;
-      Harvested();
+    void Start() {
+      OnComplete += OnHarvested;
     }
 
-    protected virtual void Harvested() {
-      harvested = true;
-      flaggedForHarvest = false;
+    private void OnHarvested() {
+      flaggedForHarvesting = false;
       Instantiate(resourcePrefab, transform.position, Quaternion.identity);
       if (deleteOnHarvest) {
         GetComponent<Deletable>().Delete();
