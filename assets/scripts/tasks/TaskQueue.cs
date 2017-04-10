@@ -1,5 +1,4 @@
 using UnityEngine;
-using Entity.Behavior;
 using System.Collections.Generic;
 
 namespace Entity.Task {
@@ -22,18 +21,6 @@ namespace Entity.Task {
 
     public void Cancel(Task task) {
       tasks.Remove(task);
-    }
-
-    private Extinguishable FindClosestExtinguishable() {
-      return Utility.Entity.FindClosest<Extinguishable>(transform.position, (Extinguishable ob) => ob.flaggedForExtinction);
-    }
-
-    private Harvestable FindClosestHarvestable() {
-      return Utility.Entity.FindClosest<Harvestable>(transform.position, (Harvestable ob) => ob.flaggedForHarvesting);
-    }
-
-    private Plantable FindClosestPlantable() {
-      return Utility.Entity.FindClosest<Plantable>(transform.position, (Plantable ob) => ob.flaggedForPlanting);
     }
   }
 }

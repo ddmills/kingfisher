@@ -3,7 +3,6 @@
 namespace Entity.Behavior {
   public class Extinguishable : Workable {
     public float maximumIntensity = 1f;
-    public bool flaggedForExtinction = false;
     public bool deleteOnExtinction = true;
     public float growthRate = .1f;
     public float intensity = .5f;
