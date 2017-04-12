@@ -8,18 +8,21 @@ namespace Entity.Task {
     private MoveTo moveTo;
     private Vector3 goal;
 
-    public Move(Vector3 goal, float epsilon = .05f) {
+    public Move(TaskQueue queue, Vector3 goal, float epsilon = .05f) : base(queue) {
       this.goal = goal;
     }
 
-    public override void Start(GameObject entity) {
-      base.Start(entity);
-      moveTo = entity.GetComponent<MoveTo>();
+    public override void OnAddWorker(TaskProcessor worker) {
+      moveTo = worker.GetComponent<MoveTo>();
       moveTo.SetGoal(goal);
     }
 
     private void OnReachedGoal() {
-      this.MarkComplete();
+      this.Complete();
+    }
+
+    public override bool CanBeWorkedBy(TaskProcessor worker) {
+      return worker.GetComponent<MoveTo>() != null;
     }
   }
 }

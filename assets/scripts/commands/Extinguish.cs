@@ -12,12 +12,12 @@ namespace Entity.Command {
     public Entity.Task.Task task;
 
     public override void Issue() {
-      task = new Entity.Task.Extinguish(GetComponent<Extinguishable>());
-      Game.instance.taskQueue.Push(task);
+      task = new Entity.Task.Extinguish(Game.instance.taskQueue, GetComponent<Extinguishable>());
+      task.manualPriority = 15f;
     }
 
     public override void Cancel() {
-      Game.instance.taskQueue.Cancel(task);
+      task.Cancel();
     }
   }
 }

@@ -10,12 +10,11 @@ namespace Entity.Command {
     public Entity.Task.Task task;
 
     public override void Issue() {
-      task = new Entity.Task.Plant(GetComponent<Entity.Behavior.Plantable>());
-      Game.instance.taskQueue.Push(task);
+      task = new Entity.Task.Plant(Game.instance.taskQueue, GetComponent<Entity.Behavior.Plantable>());
     }
 
     public override void Cancel() {
-      Game.instance.taskQueue.Cancel(task);
+      task.Cancel();
     }
   }
 }

@@ -10,12 +10,11 @@
     public Entity.Task.Task task;
 
     public override void Issue() {
-      task = new Entity.Task.Harvest(GetComponent<Entity.Behavior.Harvestable>());
-      Game.instance.taskQueue.Push(task);
+      task = new Entity.Task.Harvest(Game.instance.taskQueue, GetComponent<Entity.Behavior.Harvestable>());
     }
 
     public override void Cancel() {
-      Game.instance.taskQueue.Cancel(task);
+      task.Cancel();
     }
   }
 }

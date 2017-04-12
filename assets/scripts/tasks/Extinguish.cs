@@ -6,6 +6,12 @@ namespace Entity.Task {
     public override string presentVerb { get { return "extinguishing fire"; } }
     public override string pastVerb { get { return "extinguished fire"; } }
 
-    public Extinguish(Extinguishable extinguishable) : base(extinguishable) {}
+    public Extinguish(TaskQueue queue, Extinguishable extinguishable) : base(queue, extinguishable) {
+      maxWorkers = 4;
+    }
+
+    public override bool CanBeWorkedBy(TaskProcessor worker) {
+      return worker.GetComponent<MoveTo>() != null;
+    }
   }
 }

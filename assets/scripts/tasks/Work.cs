@@ -3,24 +3,25 @@ using Entity.Behavior;
 
 namespace Entity.Task {
   public abstract class Work : Task {
-    private MoveTo moveTo;
     protected Workable workable;
     private float workRate = .2f;
 
-    public Work(Workable workable) {
+    public Work(TaskQueue queue, Workable workable) : base(queue) {
       this.workable = workable;
     }
 
-    public override void Start(GameObject entity) {
-      base.Start(entity);
-      moveTo = entity.GetComponent<MoveTo>();
+    public override void OnAddWorker(TaskProcessor worker) {
+      MoveTo moveTo = worker.GetComponent<MoveTo>();
       moveTo.SetGoal(workable.transform.position, 2);
     }
 
-    public override void Update() {
+    public override void OnRemoveWorker(TaskProcessor worker) {
+    }
+
+    public override void Process(TaskProcessor worker) {
       if (workable.complete) {
-        MarkComplete();
-      } else if (this.moveTo.reachedGoal) {
+        Complete();
+      } else if (worker.GetComponent<MoveTo>().reachedGoal) {
         workable.Work(workRate * Time.deltaTime);
       }
     }
