@@ -4,7 +4,6 @@ namespace Entity.Behavior {
   public class Workable : MonoBehaviour {
     public delegate void CompleteHandler();
     public event CompleteHandler OnComplete;
-    public bool flaggedForWork = false;
     public bool complete = false;
     public float workRemaining = 1f;
     public ProgressMeter progressMeter;
@@ -16,7 +15,6 @@ namespace Entity.Behavior {
       if (workRemaining <= 0) {
         complete = true;
         workRemaining = 0;
-        flaggedForWork = false;
         if (OnComplete != null) {
           OnComplete();
         }

@@ -37,7 +37,7 @@ namespace Entity.Task {
       return new Wander(queue);
     }
 
-    public float TaskPreference(Task task) {
+    public float Weight(Task task) {
       if (this.task != null && this.task.Equals(task)) {
         return 2;
       } else {

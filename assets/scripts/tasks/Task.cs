@@ -16,7 +16,6 @@ namespace Entity.Task {
     public float age {
       get { return Time.realtimeSinceStartup - createdAt; }
     }
-    public float manualPriority = 1f;
     protected TaskQueue queue;
 
     public Task(TaskQueue queue) {
@@ -53,6 +52,9 @@ namespace Entity.Task {
     public virtual void OnRemoveWorker(TaskProcessor worker) {}
     public virtual void OnCancel() {}
     public virtual void OnComplete() {}
+    public virtual float Weight(TaskProcessor worker) {
+      return 1f;
+    }
     public abstract bool CanBeWorkedBy(TaskProcessor worker);
   }
 }

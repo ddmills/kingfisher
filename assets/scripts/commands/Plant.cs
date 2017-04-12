@@ -4,7 +4,7 @@ namespace Entity.Command {
       get { return "Plant"; }
     }
     public override bool cancellable {
-      get { return true; }
+      get { return false; }
     }
 
     public Entity.Task.Task task;

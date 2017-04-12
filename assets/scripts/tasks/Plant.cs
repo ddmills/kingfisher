@@ -1,4 +1,3 @@
-using UnityEngine;
 using Entity.Behavior;
 
 namespace Entity.Task {
@@ -7,10 +6,7 @@ namespace Entity.Task {
     public override string presentVerb { get { return "planting"; } }
     public override string pastVerb { get { return "planted"; } }
 
-    public Plant(TaskQueue queue, Plantable plantable) : base(queue, plantable) {
-      Debug.Log("Plant stuff");
-      Debug.Log(plantable);
-    }
+    public Plant(TaskQueue queue, Plantable plantable) : base(queue, plantable) {}
 
     public override bool CanBeWorkedBy(TaskProcessor worker) {
       return worker.GetComponent<MoveTo>() != null;

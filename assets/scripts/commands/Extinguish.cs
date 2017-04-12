@@ -13,7 +13,6 @@ namespace Entity.Command {
 
     public override void Issue() {
       task = new Entity.Task.Extinguish(Game.instance.taskQueue, GetComponent<Extinguishable>());
-      task.manualPriority = 15f;
     }
 
     public override void Cancel() {

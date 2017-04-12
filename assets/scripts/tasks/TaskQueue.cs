@@ -56,7 +56,7 @@ namespace Entity.Task {
     }
 
     private float Weight(TaskProcessor processor, Task task) {
-      return task.manualPriority * task.age * processor.TaskPreference(task);
+      return task.Weight(processor) * processor.Weight(task);
     }
 
     public void Push(Task task) {
