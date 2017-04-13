@@ -9,11 +9,11 @@
 
     public Entity.Task.Task task;
 
-    public override void Issue() {
+    public override void OnIssue() {
       task = new Entity.Task.Harvest(Game.instance.taskQueue, GetComponent<Entity.Behavior.Harvestable>());
     }
 
-    public override void Cancel() {
+    public override void OnCancel() {
       task.Cancel();
     }
   }

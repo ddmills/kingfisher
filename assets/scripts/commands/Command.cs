@@ -7,7 +7,24 @@ namespace Entity.Command {
     public bool visible = true;
     public abstract string label { get; }
     public abstract bool cancellable { get; }
-    public virtual void Issue() {}
-    public virtual void Cancel() {}
+
+    void Start() {
+      if (issued) {
+        this.Issue();
+      }
+    }
+
+    public void Issue() {
+      issued = true;
+      OnIssue();
+    }
+
+    public void Cancel() {
+      issued = false;
+      OnCancel();
+    }
+
+    public virtual void OnIssue() {}
+    public virtual void OnCancel() {}
   }
 }

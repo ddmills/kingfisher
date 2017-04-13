@@ -18,7 +18,6 @@ class GodSpawnAction : CursorAction {
       bp.transform.localScale = ob.transform.localScale;
       bp.transform.rotation = ob.transform.rotation;
       bp.GetComponentInChildren<MeshRenderer>().enabled = true;
-
       bp.GetComponent<MeshFilter>().mesh = ob.GetComponent<MeshFilter>().sharedMesh;
     }
   }

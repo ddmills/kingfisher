@@ -9,11 +9,11 @@ namespace Entity.Command {
 
     public Entity.Task.Task task;
 
-    public override void Issue() {
+    public override void OnIssue() {
       task = new Entity.Task.Plant(Game.instance.taskQueue, GetComponent<Entity.Behavior.Plantable>());
     }
 
-    public override void Cancel() {
+    public override void OnCancel() {
       task.Cancel();
     }
   }

@@ -23,7 +23,7 @@ public class Game : MonoBehaviour {
     taskQueue = GetComponent<TaskQueue>();
   }
 
-  public void Spawn(Object original, Vector3 position, Quaternion rotation) {
-    Instantiate(original, position, rotation);
+  public Object Spawn(Object original, Vector3 position, Quaternion rotation) {
+    return Instantiate(original, position, rotation);
   }
 }

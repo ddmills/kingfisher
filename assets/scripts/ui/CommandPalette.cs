@@ -14,7 +14,7 @@ public class CommandPalette : MonoBehaviour {
 
   public void OnObjectSelected(GameObject selected) {
     target = selected;
-    this.RefreshAllButtons();
+    RefreshAllButtons();
   }
 
   public void OnObjectDeselected(GameObject deselected) {
@@ -31,7 +31,6 @@ public class CommandPalette : MonoBehaviour {
         btn.GetComponentInChildren<Text>().text = command.label;
         btn.onClick.AddListener(delegate {
           command.Issue();
-          command.issued = true;
           RefreshAllButtons();
         });
       }
@@ -42,7 +41,6 @@ public class CommandPalette : MonoBehaviour {
         btn.GetComponentInChildren<Text>().text = "Cancel " + command.label;
         btn.onClick.AddListener(delegate {
           command.Cancel();
-          command.issued = false;
           RefreshAllButtons();
         });
       }

@@ -2,7 +2,6 @@ using UnityEngine;
 
 namespace Entity.Behavior {
   public class Harvestable : Workable {
-    public bool harvested = false;
     public bool deleteOnHarvest = true;
     public GameObject resourcePrefab;
 
