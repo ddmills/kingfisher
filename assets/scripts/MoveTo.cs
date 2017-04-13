@@ -7,30 +7,30 @@ public class MoveTo : MonoBehaviour {
   private NavMeshAgent agent;
   public bool reachedGoal {
     get {
-      return this.distance <= this.epsilon;
+      return distance <= epsilon;
     }
   }
   public float distance {
     get {
-      return Vector3.Distance(this.transform.position, this.goal);
+      return Vector3.Distance(transform.position, goal);
     }
   }
 
   void Start () {
-    this.agent = GetComponent<NavMeshAgent>();
+    agent = GetComponent<NavMeshAgent>();
   }
 
   public void SetGoal(Vector3 goal, float epsilon = .05f) {
     this.epsilon = epsilon;
     this.goal = goal;
-    this.agent.SetDestination(goal);
+    agent.SetDestination(goal);
   }
 
   void Update () {
-    if (this.reachedGoal) {
-      this.agent.isStopped = true;
+    if (reachedGoal) {
+      agent.isStopped = true;
     } else {
-      this.agent.isStopped = false;
+      agent.isStopped = false;
     }
   }
 
@@ -41,5 +41,11 @@ public class MoveTo : MonoBehaviour {
     // NavMesh.SamplePosition(direction, out navHit, range, layerMask);
     // Debug.Log(navHit.position);
     SetGoal(direction);
+  }
+
+  public bool CanReach(Vector3 position) {
+    NavMeshPath path = new NavMeshPath();
+    agent.CalculatePath(position, path);
+    return path.status == NavMeshPathStatus.PathComplete;
   }
 }

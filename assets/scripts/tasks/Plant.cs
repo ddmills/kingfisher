@@ -8,10 +8,6 @@ namespace Entity.Task {
 
     public Plant(TaskQueue queue, Plantable plantable) : base(queue, plantable) {}
 
-    public override bool CanBeWorkedBy(TaskProcessor worker) {
-      return worker.GetComponent<MoveTo>() != null;
-    }
-
     public override void OnCancel() {
       workable.Reset();
     }

@@ -10,10 +10,6 @@ namespace Entity.Task {
       maxWorkers = 2;
     }
 
-    public override bool CanBeWorkedBy(TaskProcessor worker) {
-      return worker.GetComponent<MoveTo>() != null;
-    }
-
     public override void OnCancel() {
       workable.Reset();
     }

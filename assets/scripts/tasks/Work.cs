@@ -28,12 +28,20 @@ namespace Entity.Task {
     }
 
     public override float Weight(TaskProcessor worker) {
-      float remaining = (1 - workable.workRemaining) * 2 + 1;
       // TODO:
-      // - check if moveTo can reach workable (in CanBeWorkedBy?)
-      // - factor in nav mesh distance to target
-      // - factor in number of people currently working on it (excluding worker)
-      return remaining;
+      // - factor in nav mesh distance to target ?
+
+      if (workers.Count == 0) {
+        return 2f;
+      } if (workers.Contains(worker)) {
+        return 3f - workable.workRemaining;
+      } else {
+        return 1 + workers.Count / maxWorkers;
+      }
+    }
+
+    public override bool CanBeWorkedBy(TaskProcessor worker) {
+      return worker.GetComponent<MoveTo>() != null;
     }
   }
 }

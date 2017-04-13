@@ -38,11 +38,7 @@ namespace Entity.Task {
     }
 
     public float Weight(Task task) {
-      if (this.task != null && this.task.Equals(task)) {
-        return 2;
-      } else {
-        return 1;
-      }
+      return 1;
     }
   }
 }
