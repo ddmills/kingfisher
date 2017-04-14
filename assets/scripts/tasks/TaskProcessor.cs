@@ -2,12 +2,8 @@
 
 namespace Entity.Task {
   public class TaskProcessor : MonoBehaviour {
-    private TaskQueue queue;
+    public TaskQueue queue;
     public Task task;
-
-    void Start() {
-      queue = Game.instance.taskQueue;
-    }
 
     private void Update () {
       queue.AssignTask(this);
