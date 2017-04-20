@@ -3,25 +3,35 @@ using UnityEngine;
 namespace Entity.Command {
 
   public abstract class Command : MonoBehaviour {
-    public bool issued = false;
+    private bool _issued = false;
+    public bool issued {
+      get {
+        return _issued;
+      }
+    }
     public bool visible = true;
+    public bool issueOnStart = false;
     public abstract string label { get; }
     public abstract bool cancellable { get; }
 
     void Start() {
-      if (issued) {
-        this.Issue();
+      if (issueOnStart) {
+        Issue();
       }
     }
 
     public void Issue() {
-      issued = true;
-      OnIssue();
+      if (!issued) {
+        _issued = true;
+        OnIssue();
+      }
     }
 
     public void Cancel() {
-      issued = false;
-      OnCancel();
+      if (issued) {
+        _issued = false;
+        OnCancel();
+      }
     }
 
     public virtual void OnIssue() {}
