@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace God.UI {
+namespace King.God.UI {
   public class CursorActionStatusLabel : MonoBehaviour {
 
     public Text text;

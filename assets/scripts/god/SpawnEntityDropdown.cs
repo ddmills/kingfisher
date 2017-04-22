@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using King.UI.Cursor;
 
-namespace God.UI {
+namespace King.God.UI {
   public class SpawnEntityDropdown : MonoBehaviour {
 
     private GameObject selected;
