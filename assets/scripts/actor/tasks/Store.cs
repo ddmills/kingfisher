@@ -8,6 +8,7 @@ namespace King.Actor.Task {
     public override string pastVerb { get { return "stored"; } }
     private Resource resource;
     private bool pickedUpResource = false;
+    private Stockpile stockpile;
 
     public Store(TaskQueue queue, Resource resource) : base(queue) {
       this.resource = resource;
@@ -26,16 +27,20 @@ namespace King.Actor.Task {
       }
     }
 
+    private Stockpile FindNearestStockpile() {
+      return King.Utility.Search.FindClosest<Stockpile>(resource.transform.position);
+    }
+
     public override void Process(Worker worker) {
       MoveTo moveTo = worker.GetComponent<MoveTo>();
       if (moveTo.reachedGoal) {
         if (!pickedUpResource) {
           worker.GetComponent<Inventory>().Add(resource);
           pickedUpResource = true;
-          moveTo.SetGoal(new Vector3(12, 0, 20), 1);
+          moveTo.SetGoal(stockpile.transform.position, 1);
         } else {
           Resource resource = worker.GetComponent<Inventory>().Remove();
-          resource.transform.position = worker.transform.position;
+          resource.transform.position = stockpile.transform.position;
           pickedUpResource = false;
           Complete();
         }
@@ -53,9 +58,13 @@ namespace King.Actor.Task {
 
     public override bool CanBeWorkedBy(Worker worker) {
       Inventory inventory = worker.GetComponent<Inventory>();
+      if (stockpile == null) {
+        stockpile = FindNearestStockpile();
+      }
 
       return worker.GetComponent<MoveTo>() != null
         && inventory != null
+        && stockpile != null
         && inventory.CanHold(resource);
     }
   }
