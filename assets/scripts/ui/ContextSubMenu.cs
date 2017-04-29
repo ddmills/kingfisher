@@ -1,14 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ContextSubMenu : MonoBehaviour {
 
   public CanvasGroup canvasGroup;
+  public RectTransform rectTransform;
   public Button button;
+
   void Start () {
-    Debug.Log("start?");
     Hide();
     button.onClick.AddListener(delegate {
       Show();
@@ -16,18 +15,13 @@ public class ContextSubMenu : MonoBehaviour {
   }
 
   public void Show() {
-    Debug.Log("SHOW");
     canvasGroup.alpha = 1;
     canvasGroup.blocksRaycasts = true;
-    // Vector2 position = Input.mousePosition;
-    // position.y -= rectTransform.rect.height;
-    // Debug.Log(rectTransform.rect.height);
-    // Debug.Log(position);
-    // rectTransform.anchoredPosition = position;
+    Vector2 position = new Vector2(140, -rectTransform.rect.height);
+    rectTransform.anchoredPosition = position;
   }
 
   public void Hide() {
-    Debug.Log("HIDE");
     canvasGroup.alpha = 0;
     canvasGroup.blocksRaycasts = false;
   }
