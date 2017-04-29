@@ -5,22 +5,23 @@ using UnityEngine;
 public class ContextMenu : MonoBehaviour {
 
   private RectTransform rectTransform;
-  private Canvas canvas;
+  private CanvasGroup canvasGroup;
   void Start () {
     rectTransform = GetComponent<RectTransform>();
-    canvas = GetComponent<Canvas>();
+    canvasGroup = GetComponent<CanvasGroup>();
+    Hide();
   }
 
   public void Show() {
-    canvas.enabled = true;
+    canvasGroup.alpha = 1;
+    canvasGroup.blocksRaycasts = true;
     Vector2 position = Input.mousePosition;
     position.y -= rectTransform.rect.height;
-    Debug.Log(rectTransform.rect.height);
-    Debug.Log(position);
     rectTransform.anchoredPosition = position;
   }
 
   public void Hide() {
-    canvas.enabled = false;
+    canvasGroup.alpha = 0;
+    canvasGroup.blocksRaycasts = false;
   }
 }
