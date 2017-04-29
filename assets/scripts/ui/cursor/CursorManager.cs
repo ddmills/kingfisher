@@ -7,6 +7,7 @@ namespace King.UI.Cursor {
     public GameObject cursor;
     public GameObject reticle;
     public GameObject blueprint;
+    public ContextMenu contextMenu;
     private CursorAction action = new SelectingAction();
 
     void Update () {
@@ -19,7 +20,6 @@ namespace King.UI.Cursor {
     }
 
     public void SetAction(CursorAction action) {
-      // this.action.Abort();
       this.action = action;
     }
 

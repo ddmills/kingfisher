@@ -10,6 +10,7 @@ namespace King.UI.Cursor {
     }
 
     public override void OnLeftClick(PointerEventData data) {
+      Game.instance.cursor.contextMenu.Hide();
       Selectable selectable = data.pointerPress.GetComponent<Selectable>();
       if (selectable && selectable.isEnabled) {
         Game.instance.selector.Select(selectable);
@@ -19,7 +20,7 @@ namespace King.UI.Cursor {
     }
 
     public override void OnRightClick(PointerEventData data) {
-      this.Abort();
+      Game.instance.cursor.contextMenu.Show();
     }
 
     public override void OnAbort() {
