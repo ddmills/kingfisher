@@ -8,14 +8,14 @@ namespace King.UI.Cursor {
     public GameObject reticle;
     public GameObject blueprint;
     public ContextMenu contextMenu;
-    private CursorAction action = new SelectingAction();
+    private CursorAction action = new SelectAction();
 
     void Update () {
       Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
       RaycastHit hit;
 
       if (Physics.Raycast(ray, out hit, 100, 1 << 9)) {
-        this.cursor.transform.position = hit.point;
+        cursor.transform.position = hit.point;
       }
     }
 
@@ -24,7 +24,7 @@ namespace King.UI.Cursor {
     }
 
     public string DescribeAction() {
-      return this.action.name;
+      return action.name;
     }
 
     public void Clicked(PointerEventData data) {
@@ -38,7 +38,7 @@ namespace King.UI.Cursor {
     }
 
     public void AbortAction() {
-      this.action = new SelectingAction();
+      action = new SelectAction();
     }
   }
 }

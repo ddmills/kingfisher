@@ -30,7 +30,7 @@ namespace King.UI.Cursor {
 
     public override void OnRightClick(PointerEventData click) {
       Game.instance.cursor.blueprint.GetComponentInChildren<MeshRenderer>().enabled = false;
-      Game.instance.cursor.SetAction(new SelectingAction());
+      Game.instance.cursor.SetAction(new SelectAction());
     }
   }
 }

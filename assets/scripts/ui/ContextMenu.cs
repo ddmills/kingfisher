@@ -4,6 +4,7 @@ public class ContextMenu : MonoBehaviour {
 
   private RectTransform rectTransform;
   private CanvasGroup canvasGroup;
+
   void Start () {
     rectTransform = GetComponent<RectTransform>();
     canvasGroup = GetComponent<CanvasGroup>();

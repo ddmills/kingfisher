@@ -2,7 +2,7 @@ using UnityEngine.EventSystems;
 using King.Component;
 
 namespace King.UI.Cursor {
-  class SelectingAction : CursorAction {
+  class SelectAction : CursorAction {
     public override string name {
       get {
         return "select";

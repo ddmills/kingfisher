@@ -17,12 +17,18 @@ public class ContextSubMenu : MonoBehaviour {
   public void Show() {
     canvasGroup.alpha = 1;
     canvasGroup.blocksRaycasts = true;
-    Vector2 position = new Vector2(140, -rectTransform.rect.height);
+    Vector2 position = new Vector2(140, -rectTransform.rect.height + 1);
     rectTransform.anchoredPosition = position;
   }
 
   public void Hide() {
     canvasGroup.alpha = 0;
     canvasGroup.blocksRaycasts = false;
+  }
+
+  public void RemoveAllItems() {
+    foreach (Transform child in canvasGroup.transform) {
+        Destroy(child.gameObject);
+      }
   }
 }
