@@ -14,20 +14,20 @@ namespace King.Actor.Task {
     }
 
     public void BeginTask(Task task) {
-      Debug.Log(this.GetComponent<Selectable>().label + " is going to " + task.rootVerb);
-      Debug.Log(this.GetComponent<Selectable>().label + " is currently " + task.presentVerb);
+      // Debug.Log(this.GetComponent<Selectable>().label + " is going to " + task.rootVerb);
+      // Debug.Log(this.GetComponent<Selectable>().label + " is currently " + task.presentVerb);
     }
 
     public void StopTask() {
-      Debug.Log(this.GetComponent<Selectable>().label + " stopped " + task.presentVerb);
+      // Debug.Log(this.GetComponent<Selectable>().label + " stopped " + task.presentVerb);
     }
 
     public void OnTaskCompleted(Task task) {
-      Debug.Log(this.GetComponent<Selectable>().label + " has " + task.pastVerb);
+      // Debug.Log(this.GetComponent<Selectable>().label + " has " + task.pastVerb);
     }
 
     public void OnTaskCancelled(Task task) {
-      Debug.Log(this.GetComponent<Selectable>().label + " stopped " + task.presentVerb + " because it was cancelled");
+      // Debug.Log(this.GetComponent<Selectable>().label + " stopped " + task.presentVerb + " because it was cancelled");
     }
 
     public Task GetDefaultTask(TaskQueue queue) {

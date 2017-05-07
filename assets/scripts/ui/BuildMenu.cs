@@ -21,6 +21,7 @@ namespace King.God.UI {
         GameObject item = (GameObject) Game.instance.Spawn(itemTemplate, Vector3.zero, Quaternion.identity);
         item.transform.SetParent(contextMenu.canvasGroup.transform);
         Button btn = item.GetComponent<Button>();
+        item.GetComponentInChildren<Text>().text = entity.name;
         btn.onClick.AddListener(delegate {
           Game.instance.cursor.SetAction(new PlaceAction(entity));
           Game.instance.cursor.contextMenu.Hide();

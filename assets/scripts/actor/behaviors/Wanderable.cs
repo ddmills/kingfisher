@@ -19,12 +19,10 @@ namespace King.Actor.Behavior {
     }
 
     public void Stop() {
-      Debug.Log("stop coroutin");
       StopCoroutine(coroutine);
     }
 
     private IEnumerator GoToRandom() {
-      Debug.Log("in coroutine");
       while(true) {
         moveTo.RandomInRange(transform.position, wanderRadius, 1 << 9);
         yield return new WaitForSeconds(wanderDelay);
