@@ -12,6 +12,11 @@ namespace King.Actor.Command {
 
     public override void OnIssue() {
       task = new Task.Store(Game.instance.taskQueue, GetComponent<Resource>());
+      task.OnCompleteE += OnTaskComplete;
+    }
+
+    private void OnTaskComplete() {
+      Disable();
     }
 
     public override void OnCancel() {

@@ -25,24 +25,24 @@ namespace King {
     public void RefreshAllButtons() {
       this.RemoveAllButtons();
       Command[] commands = target.GetComponents<Command>();
+
       foreach (Command command in commands) {
-        if (command.visible && !command.issued) {
+        command.OnStateChangeE += RefreshAllButtons;
+        if (command.visible && !command.issued && command.enabled) {
           Button btn = Instantiate(commandButtonPrefab);
           btn.transform.SetParent(this.transform);
           btn.GetComponentInChildren<Text>().text = command.label;
           btn.onClick.AddListener(delegate {
             command.Issue();
-            RefreshAllButtons();
           });
         }
 
-        if (command.issued && command.cancellable) {
+        if (command.issued && command.cancellable && command.enabled) {
           Button btn = Instantiate(commandButtonPrefab);
           btn.transform.SetParent(this.transform);
           btn.GetComponentInChildren<Text>().text = "Cancel " + command.label;
           btn.onClick.AddListener(delegate {
             command.Cancel();
-            RefreshAllButtons();
           });
         }
       }
@@ -51,6 +51,10 @@ namespace King {
     private void RemoveAllButtons() {
       foreach (Transform child in this.transform) {
         Destroy(child.gameObject);
+        Command[] commands = target.GetComponents<Command>();
+        foreach (Command command in commands) {
+          command.OnStateChangeE += RefreshAllButtons;
+        }
       }
     }
   }

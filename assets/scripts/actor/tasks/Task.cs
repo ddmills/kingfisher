@@ -6,6 +6,10 @@ namespace King.Actor.Task {
     public abstract string rootVerb { get; }
     public abstract string presentVerb { get; }
     public abstract string pastVerb { get; }
+
+    public delegate void CompleteHandler();
+    public event CompleteHandler OnCompleteE;
+
     public List<Worker> workers = new List<Worker>();
     private float createdAt;
     private bool completed = false;
@@ -43,6 +47,9 @@ namespace King.Actor.Task {
       if (!completed) {
         completed = true;
         OnComplete();
+        if (OnCompleteE != null) {
+          OnCompleteE();
+        }
         queue.Completed(this);
       }
     }

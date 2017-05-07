@@ -13,6 +13,8 @@ namespace King.Actor.Command {
     public bool issueOnStart = false;
     public abstract string label { get; }
     public abstract bool cancellable { get; }
+    public delegate void StateChangeHandler();
+    public event StateChangeHandler OnStateChangeE;
 
     void Start() {
       if (issueOnStart) {
@@ -24,6 +26,9 @@ namespace King.Actor.Command {
       if (!issued) {
         _issued = true;
         OnIssue();
+        if (OnStateChangeE != null) {
+          OnStateChangeE();
+        }
       }
     }
 
@@ -31,6 +36,23 @@ namespace King.Actor.Command {
       if (issued) {
         _issued = false;
         OnCancel();
+        if (OnStateChangeE != null) {
+          OnStateChangeE();
+        }
+      }
+    }
+
+    public void Enable() {
+      enabled = true;
+      if (OnStateChangeE != null) {
+        OnStateChangeE();
+      }
+    }
+
+    public void Disable() {
+      enabled = false;
+      if (OnStateChangeE != null) {
+        OnStateChangeE();
       }
     }
 
