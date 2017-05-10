@@ -5,66 +5,66 @@ namespace King.Actor.Task {
     public override string rootVerb { get { return "store"; } }
     public override string presentVerb { get { return "storing"; } }
     public override string pastVerb { get { return "stored"; } }
-    private Resource resource;
-    private bool pickedUpResource = false;
+    private Merchandise merchandise;
+    private bool pickedUpMerchandise = false;
     private Stockpile stockpile;
 
-    public Store(TaskQueue queue, Resource resource) : base(queue) {
-      this.resource = resource;
+    public Store(TaskQueue queue, Merchandise merchandise) : base(queue) {
+      this.merchandise = merchandise;
     }
 
     public override void OnAddWorker(Worker worker) {
       MoveTo moveTo = worker.GetComponent<MoveTo>();
-      moveTo.SetGoal(resource.transform.position, 1);
+      moveTo.SetGoal(merchandise.transform.position, 1);
     }
 
     public override void OnRemoveWorker(Worker worker) {
-      if (pickedUpResource) {
-        pickedUpResource = false;
-        Resource resource = worker.GetComponent<Inventory>().Remove();
-        resource.transform.position = worker.transform.position;
+      if (pickedUpMerchandise) {
+        pickedUpMerchandise = false;
+        Merchandise merchandise = worker.GetComponent<Inventory>().Remove();
+        merchandise.transform.position = worker.transform.position;
+      }
+      if (stockpile) {
+        stockpile.reserved = false;
+        stockpile = null;
       }
     }
 
-    private Stockpile FindNearestStockpile() {
-      return King.Utility.Search.FindClosest<Stockpile>(resource.transform.position);
+    private Stockpile FindNearestStockpile(Merchandise merchandise) {
+      return King.Utility.Search.FindClosest<Stockpile>(merchandise.transform.position, (stockpile) => {
+        return stockpile.CanAdd(merchandise);
+      });
     }
 
     public override void Process(Worker worker) {
       MoveTo moveTo = worker.GetComponent<MoveTo>();
       if (moveTo.reachedGoal) {
-        if (!pickedUpResource) {
-          worker.GetComponent<Inventory>().Add(resource);
-          pickedUpResource = true;
+        if (!pickedUpMerchandise) {
+          worker.GetComponent<Inventory>().Add(merchandise);
+          pickedUpMerchandise = true;
           moveTo.SetGoal(stockpile.transform.position, 1);
         } else {
-          Resource resource = worker.GetComponent<Inventory>().Remove();
-          resource.transform.position = stockpile.transform.position;
-          pickedUpResource = false;
+          Merchandise merchandise = worker.GetComponent<Inventory>().Remove();
+          stockpile.Add(merchandise);
+          pickedUpMerchandise = false;
           Complete();
         }
-      }
-    }
-
-    private void DropResource() {
-      if (workers.Count > 0) {
-        Worker worker = workers[0];
-        Resource resource = worker.GetComponent<Inventory>().Remove();
-        resource.transform.position = worker.transform.position;
-        pickedUpResource = false;
       }
     }
 
     public override bool CanBeWorkedBy(Worker worker) {
       Inventory inventory = worker.GetComponent<Inventory>();
       if (stockpile == null) {
-        stockpile = FindNearestStockpile();
+        stockpile = FindNearestStockpile(merchandise);
+        if (stockpile) {
+          stockpile.reserved = true;
+        }
       }
 
       return worker.GetComponent<MoveTo>() != null
         && inventory != null
         && stockpile != null
-        && inventory.CanHold(resource);
+        && inventory.CanHold(merchandise);
     }
   }
 }

@@ -3,33 +3,28 @@ using UnityEngine;
 namespace King.Component {
   public class Inventory : MonoBehaviour {
     public Transform slot;
-    public Resource resource;
-    public bool disableResource = false;
+    public Merchandise merchandise;
 
-    void Start() {
-
+    public Merchandise GetMerchandise() {
+      return merchandise;
     }
 
-    public Resource GetResource() {
-      return resource;
+    public void Add(Merchandise merchandise) {
+      this.merchandise = merchandise;
+
+      merchandise.transform.parent = slot.transform;
+      merchandise.transform.localPosition = new Vector3(0, 0, 0);
     }
 
-    public void Add(Resource resource) {
-      this.resource = resource;
-
-      resource.transform.parent = slot.transform;
-      resource.transform.localPosition = new Vector3(0, 0, 0);
-    }
-
-    public Resource Remove() {
-      Resource tmp = resource;
-      resource.transform.parent = null;
-      resource = null;
+    public Merchandise Remove() {
+      Merchandise tmp = merchandise;
+      merchandise.transform.parent = null;
+      merchandise = null;
       return tmp;
     }
 
-    public bool CanHold(Resource resource) {
-      return this.resource == null;
+    public bool CanHold(Merchandise merchandise) {
+      return this.merchandise == null;
     }
   }
 }

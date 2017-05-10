@@ -24,6 +24,7 @@ namespace King {
 
     public void RefreshAllButtons() {
       this.RemoveAllButtons();
+      if (target == null) return;
       Command[] commands = target.GetComponents<Command>();
 
       foreach (Command command in commands) {

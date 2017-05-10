@@ -11,7 +11,7 @@ namespace King.Actor.Command {
     public Task.Task task;
 
     public override void OnIssue() {
-      task = new Task.Store(Game.instance.taskQueue, GetComponent<Resource>());
+      task = new Task.Store(Game.instance.taskQueue, GetComponent<Merchandise>());
       task.OnCompleteE += OnTaskComplete;
     }
 

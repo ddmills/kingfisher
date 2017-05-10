@@ -1,7 +1,7 @@
 using UnityEngine;
 
 namespace King.Component {
-  public class Resource : MonoBehaviour {
+  public class Merchandise : MonoBehaviour {
     public void DoDisable() {
       // GetComponent<Selectable>().enabled = false;
       // GetComponent<BoxCollider>().enabled = false;
