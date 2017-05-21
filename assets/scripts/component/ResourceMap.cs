@@ -5,20 +5,20 @@ namespace King.Component {
   public class ResourceMap : MonoBehaviour {
     [System.Serializable]
     public class ResourceEntry {
-      public ResourceEntry(Resource resource, int count) {
+      public ResourceEntry(Resource resource, int quantity) {
         this.resource = resource;
-        this.count = count;
+        this.quantity = quantity;
       }
 
       public Resource resource;
-      public int count;
+      public int quantity;
     }
 
     public List<ResourceEntry> resources;
 
     public int Count(Resource resource) {
       ResourceEntry entry = Find(resource);
-      return entry == null ? 0 : entry.count;
+      return entry == null ? 0 : entry.quantity;
     }
 
     public bool Contains(Resource resource) {
@@ -29,12 +29,12 @@ namespace King.Component {
       return resources.Find(entry => entry.resource.Equals(resource));
     }
 
-    public void Add(Resource resource, int count) {
+    public void Add(Resource resource, int quantity) {
       ResourceEntry entry = Find(resource);
       if (entry != null) {
-        entry.count += count;
+        entry.quantity += quantity;
       } else {
-        resources.Add(new ResourceEntry(resource, count));
+        resources.Add(new ResourceEntry(resource, quantity));
       }
     }
 
@@ -44,13 +44,13 @@ namespace King.Component {
       return entry;
     }
 
-    public ResourceEntry Remove(Resource resource, int count) {
+    public ResourceEntry Remove(Resource resource, int quantity) {
       ResourceEntry entry = Find(resource);
       if (entry != null) {
-         if (count < entry.count) {
-          entry.count -= count;
-          return new ResourceEntry(entry.resource, count);
-        } else if (count == entry.count) {
+         if (quantity < entry.quantity) {
+          entry.quantity -= quantity;
+          return new ResourceEntry(entry.resource, quantity);
+        } else if (quantity == entry.quantity) {
           return entry;
         }
       }

@@ -5,48 +5,58 @@ namespace King.Actor.Task {
     public override string rootVerb { get { return "store"; } }
     public override string presentVerb { get { return "storing"; } }
     public override string pastVerb { get { return "stored"; } }
-    private Merchandise merchandise;
-    private bool pickedUpMerchandise = false;
+    private ResourceManifestation resource;
+    private bool pickedUpResource = false;
+    private bool storedResource = false;
     private Stockpile stockpile;
 
-    public Store(TaskQueue queue, Merchandise merchandise) : base(queue) {
-      this.merchandise = merchandise;
+    public Store(TaskQueue queue, ResourceManifestation resource) : base(queue) {
+      this.resource = resource;
     }
 
     public override void OnAddWorker(Worker worker) {
       MoveTo moveTo = worker.GetComponent<MoveTo>();
-      moveTo.SetGoal(merchandise.transform.position, 1);
+      moveTo.SetGoal(resource.transform.position, 1);
+      // resource.ReserveRemaining(worker);
+      resource.Reserve(worker, 1);
     }
 
     public override void OnRemoveWorker(Worker worker) {
-      if (pickedUpMerchandise) {
-        pickedUpMerchandise = false;
-        Merchandise merchandise = worker.GetComponent<Inventory>().Remove();
-        merchandise.transform.position = worker.transform.position;
-      }
-      if (stockpile) {
-        stockpile.reserved = false;
-        stockpile = null;
+      resource.Unreserve(worker);
+      if (pickedUpResource) {
+        pickedUpResource = false;
+        ResourceManifestation resource = worker.GetComponent<Inventory>().Remove();
+        resource.transform.position = worker.transform.position;
+        resource.Unreserve(worker);
+      // }
+      // if (stockpile) {
+      //   if (!storedMerchandise) {
+      //     stockpile.Unreserve(merchandise);
+      //   }
+      //   stockpile = null;
       }
     }
 
-    private Stockpile FindNearestStockpile(Merchandise merchandise) {
-      return King.Utility.Search.FindClosest<Stockpile>(merchandise.transform.position, (stockpile) => {
-        return stockpile.CanAdd(merchandise);
+    private Stockpile FindNearestStockpile() {
+      return King.Utility.Search.FindClosest<Stockpile>(resource.transform.position, (stockpile) => {
+        return stockpile.CanAdd(resource);
       });
     }
 
     public override void Process(Worker worker) {
       MoveTo moveTo = worker.GetComponent<MoveTo>();
       if (moveTo.reachedGoal) {
-        if (!pickedUpMerchandise) {
-          worker.GetComponent<Inventory>().Add(merchandise);
-          pickedUpMerchandise = true;
+        if (!pickedUpResource) {
+          ResourceManifestation resource = this.resource.Redeem(worker);
+          worker.GetComponent<Inventory>().Add(resource);
+          pickedUpResource = true;
           moveTo.SetGoal(stockpile.transform.position, 1);
         } else {
-          Merchandise merchandise = worker.GetComponent<Inventory>().Remove();
-          stockpile.Add(merchandise);
-          pickedUpMerchandise = false;
+      //     Merchandise merchandise = worker.GetComponent<Inventory>().Remove();
+      //     stockpile.Add(merchandise);
+      //     storedMerchandise = true;
+      //     pickedUpMerchandise = false;
+      //     merchandise.ReleaseBy(worker);
           Complete();
         }
       }
@@ -55,16 +65,16 @@ namespace King.Actor.Task {
     public override bool CanBeWorkedBy(Worker worker) {
       Inventory inventory = worker.GetComponent<Inventory>();
       if (stockpile == null) {
-        stockpile = FindNearestStockpile(merchandise);
+        stockpile = FindNearestStockpile();
         if (stockpile) {
-          stockpile.reserved = true;
+          // stockpile.Reserve(merchandise);
         }
       }
 
       return worker.GetComponent<MoveTo>() != null
         && inventory != null
         && stockpile != null
-        && inventory.CanHold(merchandise);
+        && inventory.CanHold(resource);
     }
   }
 }
