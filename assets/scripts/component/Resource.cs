@@ -10,11 +10,8 @@ namespace King.Component {
     public float weight;
     public int maxStackSize;
 
-    public ResourceManifestation Manifest(Vector3 position, int quantity = 1) {
-      GameObject instance = (GameObject) Game.instance.Spawn(gameObject, position, Quaternion.identity);
-      ResourceManifestation manifestation = instance.GetComponent<ResourceManifestation>();
-      manifestation.quantity = quantity;
-      return manifestation;
+    public GameObject Manifest(Vector3 position) {
+      return (GameObject) Game.instance.Spawn(gameObject, position, Quaternion.identity);
     }
   }
 }

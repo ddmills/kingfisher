@@ -28,5 +28,14 @@ namespace King {
     public Object Spawn(Object original, Vector3 position, Quaternion rotation) {
       return Instantiate(original, position, rotation);
     }
+
+    public void Delete(GameObject ob) {
+      Component.Deletable deletable = ob.GetComponent<Component.Deletable>();
+      if (deletable) {
+        deletable.Delete();
+      } else {
+        Destroy(gameObject);
+      }
+    }
   }
 }

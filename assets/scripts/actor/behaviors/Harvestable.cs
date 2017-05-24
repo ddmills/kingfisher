@@ -1,21 +1,23 @@
+using UnityEngine;
 using King.Component;
+using System.Collections.Generic;
 
 namespace King.Actor.Behavior {
   public class Harvestable : Workable {
     public bool deleteOnHarvest = true;
-    public bool storeResourceOnHarvest = true;
-    public Resource resource;
-    public int resourceQuantity = 2;
+    public bool storeResourcesOnHarvest = true;
+    public ResourceContainer resources;
 
     void Start() {
       OnComplete += OnHarvested;
     }
 
     private void OnHarvested() {
-      ResourceManifestation manifestation = resource.Manifest(transform.position, resourceQuantity);
-      if (storeResourceOnHarvest) {
-        // TODO: place on same queue as worker who did harvesting
-        manifestation.GetComponent<King.Actor.Command.Store>().Issue();
+      List<GameObject> manifestations = resources.Disperse(transform.position, 2);
+      if (storeResourcesOnHarvest) {
+        manifestations.ForEach(manifestation => {
+          manifestation.GetComponent<King.Actor.Command.Store>().Issue();
+        });
       }
       if (deleteOnHarvest) {
         GetComponent<Deletable>().Delete();
